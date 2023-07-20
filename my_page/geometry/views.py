@@ -15,7 +15,6 @@ def get_circle_area(request, radius: int):
     return HttpResponse(f'Площадь круга радиуса {radius} равна {round(__import__("math").pi * (radius ** 2), 2)}')
 
 
-
 def get_rectangle(request, height: int, width: int):
     return HttpResponseRedirect(f'/calculate_geometry/rectangle/{height}/{width}')
 
