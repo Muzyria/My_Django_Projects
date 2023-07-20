@@ -3,10 +3,7 @@ from django.http import HttpResponse, HttpResponseNotFound
 
 
 # Create your views here.
-
-
-def get_info_about_sign_zodiac(request, sign_zodiac):
-    signs = {
+signs = {
         'aries': ["♈", "Овен - первый знак зодиака, планета Марс (с 21 марта по 20 апреля)."],
         'taurus': ["♉", "Телец - второй знак зодиака, планета Венера (с 21 апреля по 21 мая)."],
         'gemini': ["♊", "Близнецы - третий знак зодиака, планета Меркурий (с 22 мая по 21 июня)."],
@@ -21,6 +18,12 @@ def get_info_about_sign_zodiac(request, sign_zodiac):
         'pisces': ["♓", "Рыбы - двенадцатый знак зодиака, планеты Юпитер (с 20 февраля по 20 марта)."]
     }
 
+
+def get_info_about_sign_zodiac(request, sign_zodiac: str):
     if sign_zodiac.lower() in signs:
         return HttpResponse(signs[sign_zodiac.lower()])
     return HttpResponseNotFound(f"Неизвестный знак зодиака {sign_zodiac}")
+
+
+def get_info_about_sign_zodiac_by_number(request, sign_zodiac: int):
+    return HttpResponse(f'This is number {sign_zodiac}')
