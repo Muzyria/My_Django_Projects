@@ -19,9 +19,29 @@ signs = {
     }
 
 
+def index(request):
+    zodiacs = list(signs)
+    """
+    <ol>
+        <li>aries</li>
+    </ol>
+    """
+    li_elements = ''
+    for sign in zodiacs:
+        li_elements += f'<li>{sign} {signs[sign][0]}</li>'
+
+    response = f"""
+    <h2>
+    <ol>
+        {li_elements}
+    </ol>
+    </h2>
+    """
+    return HttpResponse(response)
+
 def get_info_about_sign_zodiac(request, sign_zodiac: str):
     if sign_zodiac.lower() in signs:
-        return HttpResponse(signs[sign_zodiac.lower()])
+        return HttpResponse(f'<h2>{"".join(signs[sign_zodiac.lower()])}</h2>')
     return HttpResponseNotFound(f"Неизвестный знак зодиака {sign_zodiac}")
 
 
