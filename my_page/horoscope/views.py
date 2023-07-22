@@ -18,19 +18,20 @@ signs = {
     'pisces': ["♓", "Рыбы - двенадцатый знак зодиака, планеты Юпитер (с 20 февраля по 20 марта)."]
 }
 
+zodiac_element = {
+    'fire': ['aries', 'leo', 'sagittarius'],
+    'earth': ['taurus', 'virgo', 'capricorn'],
+    'air': ['gemini', 'libra', 'aquarius'],
+    'water': ['cancer', 'scorpio', 'pisces']
+}
+
 
 def index(request):
     zodiacs = list(signs)
-    """
-    <ul>
-        <li>aries</li>
-    </ul>
-    """
     li_elements = ''
     for sign in zodiacs:
         redirect_path = reverse("horoscope-name", args=[sign])
         li_elements += f'<li> <a href="{redirect_path}">{sign.title()}</a> {signs[sign][0]}</li>'
-
     response = f"""
     <h2>
     <ul>
@@ -41,16 +42,49 @@ def index(request):
     return HttpResponse(response)
 
 
+def type_zodiacs(request):
+    zodiacs = list(zodiac_element)
+    li_elements = ''
+    for sign in zodiacs:
+        redirect_path = reverse("horoscope-type", args=[sign])
+        li_elements += f'<li> <a href="{redirect_path}">{sign.title()}</a></li>'
+
+    response = f"""
+        <h2>
+        <ul>
+            {li_elements}
+        </ul>
+        </h2>
+        """
+    return HttpResponse(response)
+
+
+def get_zodiac_signs_for_elem(request, elements: str):
+    li_elements = ''
+    for sign in zodiac_element[elements]:
+        redirect_path = reverse("horoscope-name", args=[sign])
+        li_elements += f'<li> <a href="{redirect_path}">{sign.title()}</a></li>'
+    response = f"""
+            <h2>
+            <ul>
+                {li_elements}
+            </ul>
+            </h2>
+            """
+    return HttpResponse(response)
+
+
+
 def get_info_about_sign_zodiac(request, sign_zodiac: str):
     if sign_zodiac.lower() in signs:
         return HttpResponse(f'<h2>{"".join(signs[sign_zodiac.lower()])}</h2>')
     return HttpResponseNotFound(f"Неизвестный знак зодиака {sign_zodiac}")
 
 
-def get_info_about_sign_zodiac_by_number(request, sign_zodiac: int):
-    zodiacs = list(signs)
-    if sign_zodiac > len(zodiacs) or sign_zodiac < 1:
-        return HttpResponseNotFound(f"Неправильный порядковый номер знака зодиака - {sign_zodiac}")
-    name_zodiac = zodiacs[sign_zodiac - 1]
-    redirect_url = reverse("horoscope-name", args=[name_zodiac])
-    return HttpResponseRedirect(redirect_url)
+# def get_info_about_sign_zodiac_by_number(request, sign_zodiac: int):
+#     zodiacs = list(signs)
+#     if sign_zodiac > len(zodiacs) or sign_zodiac < 1:
+#         return HttpResponseNotFound(f"Неправильный порядковый номер знака зодиака - {sign_zodiac}")
+#     name_zodiac = zodiacs[sign_zodiac - 1]
+#     redirect_url = reverse("horoscope-name", args=[name_zodiac])
+#     return HttpResponseRedirect(redirect_url)
