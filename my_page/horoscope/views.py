@@ -26,6 +26,21 @@ zodiac_element = {
 }
 
 
+zodiac_date = {
+    1: (20, 31, 'capricorn', 'aquarius'),
+    2: (19, 29, 'aquarius', 'picses'),
+    3: (20, 31, 'picses', 'aries'),
+    4: (20, 30, 'aries', 'taurus'),
+    5: (21, 31, 'taurus', 'gemini'),
+    6: (21, 30, 'gemini', 'cancer'),
+    7: (22, 31, 'cancer', 'leo'),
+    8: (21, 31, 'leo', 'virgo'),
+    9: (22, 30, 'virgo', 'libra'),
+    10: (23, 31, 'libra', 'scorpio'),
+    11: (22, 30, 'scorpio', 'sagittarius'),
+    12: (22, 31, 'sagittarius', 'capricorn'),
+}
+
 def index(request):
     zodiacs = list(signs)
     li_elements = ''
@@ -88,3 +103,14 @@ def get_info_about_sign_zodiac(request, sign_zodiac: str):
 #     name_zodiac = zodiacs[sign_zodiac - 1]
 #     redirect_url = reverse("horoscope-name", args=[name_zodiac])
 #     return HttpResponseRedirect(redirect_url)
+
+
+def get_info_about_my_zodiac(request, month: int, day: int, item=None):
+    item = zodiac_date.get(month)
+    my_zodiac = None
+    if day in range(item[0], item[1] + 1):
+        my_zodiac = item[3]
+    else:
+        my_zodiac = item[2]
+    redirect_path = reverse("horoscope-name", args=[my_zodiac])
+    return HttpResponseRedirect(redirect_path)
