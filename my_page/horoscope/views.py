@@ -89,20 +89,19 @@ def get_zodiac_signs_for_elem(request, elements: str):
     return HttpResponse(response)
 
 
-
 def get_info_about_sign_zodiac(request, sign_zodiac: str):
     if sign_zodiac.lower() in signs:
         return HttpResponse(f'<h2>{"".join(signs[sign_zodiac.lower()])}</h2>')
     return HttpResponseNotFound(f"Неизвестный знак зодиака {sign_zodiac}")
 
 
-# def get_info_about_sign_zodiac_by_number(request, sign_zodiac: int):
-#     zodiacs = list(signs)
-#     if sign_zodiac > len(zodiacs) or sign_zodiac < 1:
-#         return HttpResponseNotFound(f"Неправильный порядковый номер знака зодиака - {sign_zodiac}")
-#     name_zodiac = zodiacs[sign_zodiac - 1]
-#     redirect_url = reverse("horoscope-name", args=[name_zodiac])
-#     return HttpResponseRedirect(redirect_url)
+def get_info_about_sign_zodiac_by_number(request, sign_zodiac: int):
+    zodiacs = list(signs)
+    if sign_zodiac > len(zodiacs) or sign_zodiac < 1:
+        return HttpResponseNotFound(f"Неправильный порядковый номер знака зодиака - {sign_zodiac}")
+    name_zodiac = zodiacs[sign_zodiac - 1]
+    redirect_url = reverse("horoscope-name", args=[name_zodiac])
+    return HttpResponseRedirect(redirect_url)
 
 
 def get_info_about_my_zodiac(request, month: int, day: int, item=None):
@@ -114,3 +113,15 @@ def get_info_about_my_zodiac(request, month: int, day: int, item=None):
         my_zodiac = item[2]
     redirect_path = reverse("horoscope-name", args=[my_zodiac])
     return HttpResponseRedirect(redirect_path)
+
+
+def get_yyyy_converters(request, sign_zodiac):
+    return HttpResponse(f'Вы передали число из 4х цифр {sign_zodiac}')
+
+
+def get_my_float_converters(request, sign_zodiac):
+    return HttpResponse(f'Вы передали вещественное число {sign_zodiac}')
+
+
+def get_my_date_converters(request, sign_zodiac):
+    return HttpResponse(f'Вы передали дату {sign_zodiac}')
