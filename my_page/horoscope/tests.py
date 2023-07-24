@@ -23,7 +23,6 @@ class TestHoroscope(TestCase):
             self.assertEquals(response.url, f'/horoscope/{value}/')
 
     def test_signs(self):
-
         for key, value in views.signs.items():
             response = self.client.get(f'/horoscope/{key}/')
             self.assertEquals(response.status_code, 200)
