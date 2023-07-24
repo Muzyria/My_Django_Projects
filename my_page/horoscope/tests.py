@@ -17,9 +17,10 @@ class TestHoroscope(TestCase):
                       response.content.decode())
 
     def test_libra_redirect(self):
-        response = self.client.get('/horoscope/7/')
-        self.assertEquals(response.status_code, 302)
-        self.assertEquals(response.url, '/horoscope/libra/')
+        for key, value in enumerate(list(views.signs), 1):
+            response = self.client.get(f'/horoscope/{key}/')
+            self.assertEquals(response.status_code, 302)
+            self.assertEquals(response.url, f'/horoscope/{value}/')
 
     def test_signs(self):
 
