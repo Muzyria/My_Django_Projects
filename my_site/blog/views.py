@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.template.loader import render_to_string
+from django.shortcuts import render
 
 # Create your views here.
 
@@ -11,7 +12,7 @@ def main_page(request):
 
 
 def posts(request):
-    return HttpResponse("Все посты блога")
+    return render(request, 'blog/list_detail.html')
 
 
 def get_info_about_name_post(request, name_post):

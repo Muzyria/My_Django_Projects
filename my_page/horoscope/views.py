@@ -91,8 +91,8 @@ def get_zodiac_signs_for_elem(request, elements: str):
 
 
 def get_info_about_sign_zodiac(request, sign_zodiac: str):
-    response = render_to_string('horoscope/info_zodiac.html')
-    return HttpResponse(response)
+    # response = render_to_string('horoscope/info_zodiac.html')
+    return render(request, 'horoscope/info_zodiac.html')
 
     # if sign_zodiac.lower() in signs:
         # return HttpResponse(f'<h2>{"".join(signs[sign_zodiac.lower()])}</h2>')
