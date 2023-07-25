@@ -1,11 +1,13 @@
 from django.http import HttpResponse
-
+from django.template.loader import render_to_string
 
 # Create your views here.
 
 
 def main_page(request):
-    return HttpResponse("Главная страница")
+    # return HttpResponse("Главная страница")
+    response = render_to_string('blog/index.html')
+    return HttpResponse(response)
 
 
 def posts(request):
