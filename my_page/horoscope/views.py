@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.urls import reverse
 from django.template.loader import render_to_string
+from dataclasses import dataclass
 
 # Create your views here.
 signs = {
@@ -89,11 +90,21 @@ def get_zodiac_signs_for_elem(request, elements: str):
             """
     return HttpResponse(response)
 
+@dataclass
+class Person:
+    name: str
+    age: int
+
+    def __str__(self):
+        return f"This is {self.name}"
 
 def get_info_about_sign_zodiac(request, sign_zodiac: str):
     description = " ".join(signs.get(sign_zodiac))
     data = {
-        'description_zodiac': description
+        'description_zodiac': description,
+        'sign': sign_zodiac.title(),
+        'my_dict': {'name': 'Jack'},
+        'my_class': Person('Will', 35)
     }
     return render(request, 'horoscope/info_zodiac.html', context=data)
 
