@@ -16,15 +16,21 @@ def posts(request):
 
 
 def get_info_about_name_post(request, name_post):
+    data = {
+        'name': name_post
+    }
     if name_post == 'keanu':
         return keanu(request)
     elif name_post == 'records':
         return get_guinness_world_records(request)
-    return HttpResponse(f"Информация о посте {name_post}")
+    return render(request, 'blog/detail_by_name.html', context=data)
 
 
 def get_info_about_name_post_by_number(request, number_post: int):
-    return HttpResponse(f"Здесь содержится информация о посте под номером {number_post}")
+    data = {
+        'number': number_post
+    }
+    return render(request, 'blog/detail_by_number.html', context=data)
 
 
 def keanu(request):
