@@ -6,4 +6,5 @@ urlpatterns = [
     path('posts/', views.posts),
     path('posts/<int:number_post>/', views.get_info_about_name_post_by_number),
     path('posts/<str:name_post>/', views.get_info_about_name_post),
+
 ]
