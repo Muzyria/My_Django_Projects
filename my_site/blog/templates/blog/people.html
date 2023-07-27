@@ -6,8 +6,11 @@
 </head>
 <body>
     <h2>Информации о людях</h2>
-    {% for people in peoples %}
-    <p><b>{{ people|title }}</b></p>
-    {% endfor %}
+        {% for item in peoples %}
+            <h5>ФИО - {{item.name}}</h5>
+            <p>Возраст - {{item.age}}</p>
+            <p>Телефон - {{item.phone}}</p>
+        {% endfor %}
+
 </body>
 </html>
