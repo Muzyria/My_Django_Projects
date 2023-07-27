@@ -103,11 +103,6 @@ def get_info_about_sign_zodiac(request, sign_zodiac: str):
     return render(request, 'horoscope/info_zodiac.html', context=data)
 
 
-    # if sign_zodiac.lower() in signs:
-        # return HttpResponse(f'<h2>{"".join(signs[sign_zodiac.lower()])}</h2>')
-    # return HttpResponseNotFound(f"Неизвестный знак зодиака {sign_zodiac}")
-
-
 def get_info_about_sign_zodiac_by_number(request, sign_zodiac: int):
     zodiacs = list(signs)
     if sign_zodiac > len(zodiacs) or sign_zodiac < 1:

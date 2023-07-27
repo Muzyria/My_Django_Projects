@@ -1,15 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Menu</title>
-</head>
-<body>
-    <ul>
-       {% for zodiac in zodiacs %}
-            <li><a href="/horoscope/{{zodiac}}">{{ zodiac|title }}</a></li>
-        {% endfor %}
-    </ul>
+{% extends 'base.html' %}
 
-</body>
-</html>
+
+{% block title%}
+Menu
+{% endblock %}
+
+{% block content%}
+<h2>FROM INDEX.HTML</h2>
+<ul>
+    {% for zodiac in zodiacs %}
+    <li><a href="{% url 'horoscope-name' sign_zodiac=zodiac %}">{{ zodiac|title }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}
