@@ -20,32 +20,8 @@ signs = {
     'pisces': ["♓", "Рыбы - двенадцатый знак зодиака, планеты Юпитер (с 20 февраля по 20 марта)."]
 }
 
-zodiac_element = {
-    'fire': ['aries', 'leo', 'sagittarius'],
-    'earth': ['taurus', 'virgo', 'capricorn'],
-    'air': ['gemini', 'libra', 'aquarius'],
-    'water': ['cancer', 'scorpio', 'pisces']
-}
-
-
-zodiac_date = {
-    1: (20, 31, 'capricorn', 'aquarius'),
-    2: (19, 29, 'aquarius', 'picses'),
-    3: (20, 31, 'picses', 'aries'),
-    4: (20, 30, 'aries', 'taurus'),
-    5: (21, 31, 'taurus', 'gemini'),
-    6: (21, 30, 'gemini', 'cancer'),
-    7: (22, 31, 'cancer', 'leo'),
-    8: (21, 31, 'leo', 'virgo'),
-    9: (22, 30, 'virgo', 'libra'),
-    10: (23, 31, 'libra', 'scorpio'),
-    11: (22, 30, 'scorpio', 'sagittarius'),
-    12: (22, 31, 'sagittarius', 'capricorn'),
-}
-
 
 def index(request):
-    # f'<li> <a href="{redirect_path}">{sign.title()}</a> {signs[sign][0]}</li>'
     zodiacs = list(signs)
     context = {
         "zodiacs": zodiacs,
@@ -53,45 +29,6 @@ def index(request):
     }
     return render(request, 'horoscope/index.html', context=context)
 
-
-def type_zodiacs(request):
-    zodiacs = list(zodiac_element)
-    li_elements = ''
-    for sign in zodiacs:
-        redirect_path = reverse("horoscope-type", args=[sign])
-        li_elements += f'<li> <a href="{redirect_path}">{sign.title()}</a></li>'
-
-    response = f"""
-        <h2>
-        <ul>
-            {li_elements}
-        </ul>
-        </h2>
-        """
-    return HttpResponse(response)
-
-
-def get_zodiac_signs_for_elem(request, elements: str):
-    li_elements = ''
-    for sign in zodiac_element[elements]:
-        redirect_path = reverse("horoscope-name", args=[sign])
-        li_elements += f'<li> <a href="{redirect_path}">{sign.title()}</a></li>'
-    response = f"""
-            <h2>
-            <ul>
-                {li_elements}
-            </ul>
-            </h2>
-            """
-    return HttpResponse(response)
-
-@dataclass
-class Person:
-    name: str
-    age: int
-
-    def __str__(self):
-        return f"This is {self.name}"
 
 def get_info_about_sign_zodiac(request, sign_zodiac: str):
     description = " ".join(signs.get(sign_zodiac))
@@ -110,26 +47,3 @@ def get_info_about_sign_zodiac_by_number(request, sign_zodiac: int):
     name_zodiac = zodiacs[sign_zodiac - 1]
     redirect_url = reverse("horoscope-name", args=[name_zodiac])
     return HttpResponseRedirect(redirect_url)
-
-
-def get_info_about_my_zodiac(request, month: int, day: int, item=None):
-    item = zodiac_date.get(month)
-    my_zodiac = None
-    if day in range(item[0], item[1] + 1):
-        my_zodiac = item[3]
-    else:
-        my_zodiac = item[2]
-    redirect_path = reverse("horoscope-name", args=[my_zodiac])
-    return HttpResponseRedirect(redirect_path)
-
-
-def get_yyyy_converters(request, sign_zodiac):
-    return HttpResponse(f'Вы передали число из 4х цифр {sign_zodiac}')
-
-
-def get_my_float_converters(request, sign_zodiac):
-    return HttpResponse(f'Вы передали вещественное число {sign_zodiac}')
-
-
-def get_my_date_converters(request, sign_zodiac):
-    return HttpResponse(f'Вы передали дату {sign_zodiac}')
